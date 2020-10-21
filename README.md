@@ -53,4 +53,3 @@ Me acompanhe nas minhas redes sociais.
 ---
 
 Feito com ❤️ by **Lucca Rodrigues** 🤙
-# Gobarber-Application
