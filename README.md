@@ -1,6 +1,6 @@
 
 <h4 align="center">
-<img src="screenshot/readme.jfif" /><br>
+<img src="screenshot/readme.JPG" /><br>
  <b>Go Barber</b> 🦸‍♂️
 </h4>
 
