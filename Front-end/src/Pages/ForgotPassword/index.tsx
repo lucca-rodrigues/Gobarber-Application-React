@@ -14,18 +14,21 @@ import Input from '../../Components/Input';
 import Button from '../../Components/Button';
 
 import { Container, Content, AnimationContainer, Background } from './styles';
+
 import api from '../../Services/api';
 
 interface ForgotPasswordFormData {
   email: string;
 }
-
 const ForgotPassword: React.FC = () => {
+  const [loading, setLoading] = useState(false);
   const formRef = useRef<FormHandles>(null);
+
 
   const handleSubmit = useCallback(
     async (data: ForgotPasswordFormData) => {
       try {
+        setLoading(true);
 
         formRef.current?.setErrors({});
 
@@ -42,9 +45,7 @@ const ForgotPassword: React.FC = () => {
         await api.post('/password/forgot', {
           email: data.email,
         });
-
-        toast.success("Enviamos um e-mail para confirmar a recuperação de senha, cheque sua caixa de entrada")
-
+        toast.success('Enviamos um e-mail para confirmar a recuperação de senha, cheque sua caixa de entrada');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -53,7 +54,9 @@ const ForgotPassword: React.FC = () => {
 
           return;
         }
-          toast.error("Ocorreu um erro ao tentar realizar a recuperação de senha, tente novamente.")
+        toast.error('Ocorreu um erro ao tentar realizar a recuperação de senha, tente novamente.');
+      } finally {
+        setLoading(false);
       }
     },
     [],
@@ -70,12 +73,12 @@ const ForgotPassword: React.FC = () => {
 
             <Input name="email" icon={FiMail} placeholder="E-mail" />
 
-            <Button type="submit">
+            <Button loading={loading} type="submit">
               Recuperar
             </Button>
           </Form>
 
-          <Link to="/signin">
+          <Link to="/">
             <FiLogIn />
             Voltar ao login
           </Link>
