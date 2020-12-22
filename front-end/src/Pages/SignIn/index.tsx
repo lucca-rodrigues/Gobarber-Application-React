@@ -3,8 +3,11 @@ import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
+import {Link} from 'react-router-dom';
 
 import { useAuth } from '../../Context/AuthContext';
+
+
 import getValidationErrors from '../../Utils/GetValidationErrors';
 
 import logoImg from '../../Assets/logo.svg';
@@ -12,7 +15,8 @@ import logoImg from '../../Assets/logo.svg';
 import Input from '../../Components/Input';
 import Button from '../../Components/Button';
 
-import { Container, Content, Background } from './styles';
+import { Container, AnimationContainer, Background } from './styles';
+import { toast } from 'react-toastify';
 
 interface SignInFormData {
   email: string;
@@ -45,18 +49,22 @@ const SignIn: React.FC = () => {
         password: data.password,
       });
 
+      toast.success("Login realizado com sucesso!");
+
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
 
         formRef.current?.setErrors(errors);
       }
+      toast.error("Erro ao realizar login, verifique se suas credenciais estão corretas!")
     }
+
   }, [signIn]);
 
   return (
     <Container>
-      <Content>
+      <AnimationContainer>
         <img src={logoImg} alt="GoBarber" />
 
         <Form ref={formRef} onSubmit={handleSubmit}>
@@ -73,14 +81,14 @@ const SignIn: React.FC = () => {
 
           <Button type="submit">Entrar</Button>
 
-          <a href="forgot">Esqueci minha senha</a>
+          <Link to="forgot">Esqueci minha senha</Link>
         </Form>
 
-        <a href="signup">
+        <Link to="/signup">
           <FiLogIn />
           Criar conta
-        </a>
-      </Content>
+        </Link>
+      </AnimationContainer>
 
       <Background />
     </Container>

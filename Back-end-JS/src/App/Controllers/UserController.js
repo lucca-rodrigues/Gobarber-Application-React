@@ -3,6 +3,19 @@ import User from '../Models/User';
 import File from '../Models/File';
 
 class UserController {
+  async index ({ res}){
+    const users = {}; 
+
+      User.find({}, function (err, user) { 
+
+      users[user.email] = user; 
+
+      }); 
+
+      res.send(users); 
+ 
+   }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
